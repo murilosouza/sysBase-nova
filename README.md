@@ -22,16 +22,20 @@ Clone o repositório para a sua máquina local:
 
 ```bash
 git clone https://github.com/murilosouza/sysBase-nova.git
+```
 cd SEU_REPOSITORIO
 
 ### 2. Criando o Diretório application
 Crie um diretório application na raiz do projeto, onde os arquivos da aplicação Laravel serão montados:
 
+```bash
 mkdir -p application
+````
 
 ### 3. Criando o Arquivo .env
 Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
 
+```bash
 APP_ENV=local
 APP_KEY=base64:YOUR_APP_KEY_HERE
 DB_CONNECTION=pgsql
@@ -40,7 +44,7 @@ DB_PORT=5432
 DB_DATABASE=postgres
 DB_USERNAME=postgres
 DB_PASSWORD=YOUR_DB_PASSWORD_HERE
-
+```
 ## Substitua YOUR_APP_KEY_HERE e YOUR_DB_PASSWORD_HERE pelos valores adequados para a sua configuração.
 
 ### 4. Configuração do Docker
@@ -52,8 +56,9 @@ docker-environment/nginx/nginx.conf: Arquivo de configuração do NGINX.
 
 ### 5. Inicializando os Containers
 Para construir e iniciar os containers, execute o seguinte comando:
-
+```bash
 docker-compose up --build
+```
 Esse comando irá:
 
 Construir as imagens Docker para o PHP, Redis e PostgreSQL.
@@ -65,8 +70,9 @@ Após a inicialização, a aplicação estará disponível em http://localhost:8
 
 ### 7. Parando os Containers
 Para parar os containers, execute:
-
+```bash
 docker-compose down
+```
 Este comando irá parar e remover os containers, mantendo os volumes persistentes.
 
 ## Contato
