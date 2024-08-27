@@ -7,9 +7,10 @@ services:
       dockerfile: docker-environment/php/Dockerfile
     container_name: w3sys-app
     restart: always
-    working_dir: /var/www/
+    working_dir: /var/www/application
     volumes:
       - ./:/var/www
+      - ./application:/var/www/application
     environment:
       - COMPOSER_HOME=/composer
       - COMPOSER_ALLOW_SUPERUSER=1

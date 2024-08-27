@@ -1,9 +1,7 @@
 FROM php:8.2-fpm
 
-# Define a working directory
-WORKDIR /var/www
+WORKDIR /var/www/application
 
-# Atualização dos pacotes e instalação de dependências em uma única camada
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -19,24 +17,21 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instala o Composer
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-# Cria um grupo e usuário para a aplicação Laravel
-RUN groupadd -g 1000 www \
-    && useradd -u 1000 -ms /bin/bash -g www www
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
-# Copia o código da aplicação e ajusta as permissões
-COPY --chown=www:www . /var/www
+RUN mkdir -p /composer/cache && \
+    chown -R www:www /composer
 
-# Ajusta as permissões, evitando permissões 777
-RUN chown -R www-data:www-data /var/www/application \
+COPY --chown=www:www . /var/www/application
+
+RUN chown -R www:www /var/www/application \
     && find /var/www/application -type d -exec chmod 755 {} \; \
     && find /var/www/application -type f -exec chmod 644 {} \;
 
-# Muda o usuário corrente para "www"
 USER www
 
-# Expõe a porta 9000 e inicia o servidor PHP-FPM
 EXPOSE 9000
 CMD ["php-fpm"]
